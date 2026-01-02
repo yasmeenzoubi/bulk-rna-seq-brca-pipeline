@@ -236,6 +236,7 @@ EnhancedVolcano(res_shrunk, lab = res_shrunk$symbol, x = "log2FoldChange", y = "
 ```
 
 ![Volcano Plot](enhanced_volcano.png)
+
 Interpretation: In the volcano plot, the y-axis represents the p-value log, where the larger the log-value is, the smaller the p-value of that gene is and more statistically significant it is. On the other hand, the x-axis represents the fold change log. The fold change is the ratio of expression of genes in the tumor samples/expression of genes in the normal samples (since I set the “Normal Solid Tissue” group as the baseline earlier, it is in the denominator). A negative fold change indicates the gene is more commonly expressed in the normal samples, while a positive fold change indicates the gene is more commonly expressed in the tumor samples.
 The plot illustrates PAMR1, MME, and FMO2, which do have statistical significance (padj < 0.05) and are more abundant in the “Normal Solid Tissue” group. On the other hand, genes such as MMP11, PLPP4, COMP, COL11A1, and NEK2 are more commonly expressed in the “Primary Tumor” group. These genes appear higher up along the y-axis, therefore indicating they have very low p-values < 0.05 and illustrate statistical significance between gene abundance and sample.
 
@@ -256,6 +257,7 @@ pheatmap(mat, cluster_rows = TRUE, cluster_cols = FALSE, show_rownames = TRUE, s
 ```
 
 ![Heat Map of Top 50 Genes](top_50_heatmap.png)
+
 Here, the “Primary Tumor” group on the first half of the map and the “Human Solid Tissue” group on the second half of the map. There are very clear distinctions between both groups – genes that are heavily abundant in the normal group have low abundances in the tumor groups (i.e. TSLP, PAMR1, FMO2, VIT, and MME), and vice versa (NUAK2, NEK2, MMP11, PLPP4, COMP, COLL11A1, and KIF4A). Some genes do show a degree of lower expression between 2 groups (i.e. blue grids are seen in the same row between both sample groups). However the overall map pattern illustrates a distinct gene abundances profile between both groups, which confirms the DESeq2 and volcano plot results. Finally, a horizontal dendogram was added to illustrate hierarchical clustering of genes. This illustrates that clustered genes represent similar abundance patterns amongst each other (ex: TPX2 and CDC25C).
 
 ## Gene Set Enrichment 
@@ -270,6 +272,7 @@ dotplot(go_results)
 ```
 
 ![Gene Enrichment Plot](gene_enrichment_plot.png)
+
 Interpretation: In this Gene Ontology (GO) dot plot, the x-axis represents the GeneRatio, which represents the proportion of genes associated with each biological process, and the y-axis represents the enriched phenotype/biological process. The point size corresponds to the number of enriched genes (Count) and color represents p-value (p.adjust), where terracotta dots represent higher significance and blue dots represent lower significance. Here, the most significant genes in processes such as regulation of cellular component size and response to insulin both phenotypes being strongly associated with strong cancer biology. Conversely the genes with lower significance are associated with regulation of cell growth and regulation of actin cytoskeleton organization. Low significance for cell growth regulation confirms the cancer phenotype as this process is downregulated in tumors.
 
 ## Limma Voom/edgeR differential abundance analysis
