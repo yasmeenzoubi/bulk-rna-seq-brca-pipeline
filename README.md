@@ -415,6 +415,6 @@ dds <- DESeqDataSetFromMatrix(countData = counts_matrix, colData = metadata, des
 ```
 
 ## Final Note
-Analysis was performed using the Bioconductor ecosystem (recount3, DESeq2, edgeR, limma). AI tools were utilized to optimize code syntax and visualization parameters, while ecological interpretations and statistical validations were manually conducted to ensure biological accuracy.
+Analysis was performed using the Bioconductor ecosystem (recount3, DESeq2, edgeR, limma). AI tools were utilized to optimize code syntax and visualization parameters, while analytical interpretations and statistical validations were manually conducted to ensure biological accuracy.
 
 
