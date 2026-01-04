@@ -2,10 +2,10 @@
 # Bulk RNA-Seq BRCA Project
 
 ## Introduction/Project Summary
-I compared 20 normal vs. 20 primary tumor samples, filtered low-count genes, and ran DESeq2 with FDR correction to identify significantly differentially expressed genes (14,099 with padj < 0.05).
-I validated patterns using PCA, EnhancedVolcano plots, heatmaps, limma-voom, and edgeR — all pipelines consistently highlighting tumor suppressors (PAMR1, MME, FMO2) and pro-tumorigenic genes (MMP11, PLPP4, COMP).
+In this project, I compared 20 normal vs. 20 primary tumor samples obtained from the recount3 package The Cancer Genome Atlas (TCGA) database, filtered low-count genes, and ran DESeq2 with FDR correction and identified 14099 significantly differentially expressed genes between both groups (padj < 0.05) out of a total of 35646 analyzed genes.
+I then validated the differential abundance analysis via PCA, volcano plot, heatmap, limma-voom, and edgeR. All validation methods consistently highlighting tumor suppressors (PAMR1, MME, FMO2) and pro-tumorigenic genes (MMP11, PLPP4, COMP) to be significant.
 Gene Ontology enrichment revealed strong association with cancer-related pathways such as regulation of cellular component size and insulin response.
-This project demonstrates practical skills in RNA-Seq preprocessing, DESeq2, limma/edgeR validation, annotation, visualization, and biological interpretation.
+This project demonstrates practical skills in RNA-Seq preprocessing, DESeq2, limma/edgeR validation, annotation, visualization, and biological interpretation. RNA-Seq analysis can be utilized to identify significant genes expressed between healthy and diseased groups, which can be translated to research and clinical settings where targeted gene therapies can be utilized as methods to treat chronic and life-threatening diseases such as cancer.
 
 ## Install and Load the Required Package
 
