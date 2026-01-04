@@ -249,11 +249,11 @@ ord <- order(res$padj, na.last = NA)
 top50_genes <- head(ord, 50)
 mat <- assay(vsd)[top50_genes, ]
 # Perform Z-score scaling (Standardize rows)
-mat <- t(scale(t(mat)))
+mat_scaled <- t(scale(t(mat)))
 #Map Ensembl IDs to symbols (this will show the gene names as opposed to the confusing Ensembl IDs)
-rownames(mat) <- res$symbol[top50_genes]
+rownames(mat_scaled) <- res$symbol[top50_genes]
 # Plot with pheatmap
-pheatmap(mat, cluster_rows = TRUE, cluster_cols = FALSE, show_rownames = TRUE, show_colnames = FALSE, main = "Top 50 DE Genes: Tumor vs Normal", color = colorRampPalette(c("blue", "white", "red"))(50))
+pheatmap(mat_scaled, main = "Top 50 DE Genes: Tumor vs Normal", cluster_rows = TRUE, cluster_cols = FALSE, show_colnames = FALSE, color = colorRampPalette(c("navy", "white", "firebrick3"))(100))
 ```
 
 ![Heat Map of Top 50 Genes](top_50_heatmap.png)
