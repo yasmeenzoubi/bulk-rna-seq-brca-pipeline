@@ -10,7 +10,7 @@ RNA-Seq analysis can be utilized to identify significant genes expressed between
 ## Install necessary packages
 
 ```r
-BiocManager::install(c("DESeq2", "AnnotationHub", "EnhancedVolcano", "clusterProfiler", "edgeR", "limma", "ensembldb"))
+BiocManager::install(c("DESeq2", "AnnotationHub", "EnhancedVolcano", "clusterProfiler", "edgeR", "limma", "ensembldb", "GenomicRanges"))
 install.packages(c("dplyr", "pheatmap"))
 ```
  	
@@ -26,6 +26,7 @@ library(clusterProfiler)
 library(edgeR)
 library(limma)
 library(ensembldb)
+library(GenomicRanges)
 ```
 ## Access the databse
 Next, find available projects to perform RNA-Seq on. The breast cancer dataset (BRCA) from The Cancer Genome Atlas (TCGA) was selected for this project.
