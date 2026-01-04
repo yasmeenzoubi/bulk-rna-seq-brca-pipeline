@@ -7,14 +7,15 @@ I then validated the differential abundance analysis via PCA, volcano plot, heat
 Gene Ontology enrichment revealed strong association with cancer-related pathways such as regulation of cellular component size and insulin response.
 This project demonstrates practical skills in RNA-Seq preprocessing, DESeq2, limma/edgeR validation, annotation, visualization, and biological interpretation. RNA-Seq analysis can be utilized to identify significant genes expressed between healthy and diseased groups, which can be translated to research and clinical settings where targeted gene therapies can be utilized as methods to treat chronic and life-threatening diseases such as cancer.
 
-## Install and Load the Required Package
+## Install necessary packages
 
 ```r
-#Install necessary packages
 BiocManager::install(c("DESeq2", "AnnotationHub", "EnhancedVolcano", "clusterProfiler", "edgeR", "limma", "ensembldb"))
 install.packages(c("dplyr", "pheatmap"))
+```
  	
-#Load necessary packages
+## Load necessary packages
+```r
 library(recount3)
 library(DESeq2)
 library(dplyr)
@@ -26,6 +27,7 @@ library(edgeR)
 library(limma)
 library(ensembldb)
 ```
+## Access the databse
 Next, find available projects to perform RNA-Seq on. The breast cancer dataset (BRCA) from The Cancer Genome Atlas (TCGA) was selected for this project.
 
 ```r
@@ -107,7 +109,7 @@ rse_brca$tcga.cgc_sample_sample_type <- relevel(factor(rse_brca$tcga.cgc_sample_
 set.seed(123)
 tumor_idx <- which(rse_brca$tcga.cgc_sample_sample_type == "Primary Tumor")
 normal_idx <- which(rse_brca$tcga.cgc_sample_sample_type == "Solid Tissue Normal")
-#Shrink object into RAM
+#Shrink object into RAM to ensure the full analysis could be run efficiently on a standard computer/laptop
 selected_idx <- c(sample(tumor_idx, 20), sample(normal_idx, 20))
 rse_brca <- rse_brca[, selected_idx]
 ```
@@ -206,7 +208,7 @@ rownames(res_shrunk) <- gsub("\\..*", "", rownames(res_shrunk))
 ah <- AnnotationHub()
 #Obtain queries from Human organism database (OrgDb)
 org_db <- query(ah, c("OrgDb", "Homo sapiens"))[[1]]
-#Maping Ensembl IDs to Gene Symbols
+#Mapping Ensembl IDs to Gene Symbols
 res$symbol <- mapIds(org_db, keys = rownames(res), column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first")
 res_shrunk$symbol <- mapIds(org_db, keys = rownames(res_shrunk), column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first")
 ```
@@ -223,7 +225,7 @@ plotPCA(vsd, intgroup = "tcga.cgc_sample_sample_type")
 ```
 
 ![PCA Plot](PCA.png)
-Interpretation: This plot displays two distinct clusters – one for the “Primary Tumor” samples and one for the “Solid Tissue Normal” group, confirming that each group’s gene expression profiles vary significantly from one another. The “Primary Tumor” points cluster close with one another, while the “Solid Tissue Normal” are more dispersed. This suggests the former’s genes expression profiles are homogenous in while the latter’s genes heterogenous. PC1 and PC2 represent variables designed to capture the maximum amount of gene expression variance in the dataset. PC1 captures 38% of the biological differences in gene expression between both samples, PC2 represents a secondary source of variation (example: tumor stage, patient age, or batch effects)
+Interpretation: This plot displays two distinct clusters – one for the “Primary Tumor” samples and one for the “Solid Tissue Normal” group, confirming that each group’s gene expression profiles vary significantly from one another. The “Primary Tumor” points cluster close with one another, while the “Solid Tissue Normal” are more dispersed. This suggests the former’s genes expression profiles are homogenous while the latter’s genes heterogenous. PC1 and PC2 represent variables designed to capture the maximum amount of gene expression variance in the dataset. PC1 captures 38% of the biological differences in gene expression between both samples, PC2 represents a secondary source of variation (example: tumor stage, patient age, or batch effects)
 A batch effect refers to the variation in data caused by a non-biological variable outside of the study (ex: different testing centers, different testing methods, tissue source, testing on different days of the week, etc…). They raise issues in data interpretation as they can lead to incorrect data interpretation (ex: false positives or negatives).
 
 ## Enhanced Volcano
@@ -258,7 +260,7 @@ pheatmap(mat_scaled, main = "Top 50 DE Genes: Tumor vs Normal", cluster_rows = T
 
 ![Heat Map of Top 50 Genes](top_50_heatmap.png)
 
-Here, the “Primary Tumor” group on the first half of the map and the “Human Solid Tissue” group on the second half of the map. There are very clear distinctions between both groups – genes that are heavily abundant in the normal group have low abundances in the tumor groups (i.e. TSLP, PAMR1, FMO2, VIT, and MME), and vice versa (NUAK2, NEK2, MMP11, PLPP4, COMP, COLL11A1, and KIF4A). Some genes do show a degree of lower expression between 2 groups (i.e. blue grids are seen in the same row between both sample groups). However the overall map pattern illustrates a distinct gene abundances profile between both groups, which confirms the DESeq2 and volcano plot results. Finally, a horizontal dendogram was added to illustrate hierarchical clustering of genes. This illustrates that clustered genes represent similar abundance patterns amongst each other (ex: TPX2 and CDC25C).
+Here, the “Primary Tumor” group on the first half of the map and the “Human Solid Tissue” group on the second half of the map. There are very clear distinctions between both groups – genes that are heavily abundant in the normal group have low abundances in the tumor groups (i.e. TSLP, PAMR1, FMO2, VIT, and MME), and vice versa (NUAK2, NEK2, MMP11, PLPP4, COMP, COLL11A1, and KIF4A). Some genes do show a degree of lower expression between 2 groups (i.e. blue grids are seen in the same row between both sample groups). However the overall map pattern illustrates a distinct gene abundances profile between both groups, which confirms the DESeq2 and volcano plot results. Finally, a horizontal dendrogram was added to illustrate hierarchical clustering of genes. This illustrates that clustered genes represent similar abundance patterns amongst each other (ex: TPX2 and CDC25C).
 
 ## Gene Set Enrichment 
 Gene enrichment is a computational method used to identify significant genes in large gene expression lists, which are associated with various phenotypes or physiological pathways. Here I want to identify the phenotype/pathway the significant genes are associated with.
@@ -299,7 +301,7 @@ rownames(limma_res) <- gsub("\\..*", "", rownames(limma_res))
 rownames(edgeR_results) <- gsub("\\..*", "", rownames(edgeR_results))
 ah <- AnnotationHub()
 org_db <- query(ah, c("OrgDb", "Homo sapiens"))[[1]]
-#Maping Ensembl IDs to Gene Symbols
+#Mapping Ensembl IDs to Gene Symbols
 limma_res$symbol <- mapIds(org_db, keys = rownames(limma_res), column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first")
 edgeR_results$symbol <- mapIds(org_db, keys = rownames(edgeR_results), column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first")
 #View top 10 limma (uses “adj.P.Val”)
