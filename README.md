@@ -170,7 +170,7 @@ ENSG00000231514.1  0.7017871  0.482812  0.615202
 ENSG00000237917.1  0.1971211  0.843733  0.898079
 ```
 ```r
-#LFC shrinkage for generating volcano plot (log transform function generates scale to reduce the clutter of low-count genes and prevents technical noise from appearing as large biological effects in volcano plot)
+#view name
 resultsNames(dds)
 ```
 Output
@@ -179,7 +179,7 @@ Output
 [2] "tcga.cgc_sample_sample_type_Primary.Tumor_vs_Solid.Tissue.Normal"
 ```
 ```r
-#assign result name
+#LFC shrinkage for generating volcano plot (log transform function generates scale to reduce the clutter of low-count genes and prevents technical noise from appearing as large biological effects in volcano plot)
 res_shrunk <- lfcShrink(dds, coef = "tcga.cgc_sample_sample_type_Primary.Tumor_vs_Solid.Tissue.Normal", type = "apeglm")
 ```
 
