@@ -346,8 +346,8 @@ ENSG00000196549       MME 1.281916e-11
 
 In the limma voom and edgeR analyses, there are very significant genes - MMP11, COL10A1, PLPP4, COMP, PAMR1, and MME, all of which overlap with the most significant genes observed in the DESeq2 analysis and EnhancedVolcano. Therefore, the differential abundances analysis between DESeq2, limma voom and edgeR pipelines are very similar and these are all useful methods which can be used in RNA-Seq workflows.
 
-## BONUS! Using GRanges to find the chromosome #, start and stop position, and strand direction of a gene of interest
-If you really want to take your gene analysis a step further, you can utilize the GRanges tool to identify the chromosome your gene of interest is located. I am interested in MMP11, a key pro-tumorigenic protease which plays a role in the progression of breast, pancreatic, and gastric cancers. In the 3 differential abundance pipelines, it was the most significant gene.
+## BONUS! Using GenomicRanges to find the chromosome #, start and stop position, and strand direction of a gene of interest
+If you want to take your gene analysis a step further, you can utilize the GenomicRanges tool to identify the chromosome your gene of interest is located. I am interested in MMP11, a key pro-tumorigenic protease which plays a role in the progression of breast, pancreatic, and gastric cancers. In the 3 differential abundance pipelines, it was the most significant gene.
 
 ```r
 #use ah <- AnnotationHub()
